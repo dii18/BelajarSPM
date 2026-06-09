@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rangkuman UAS — Sistem Pengendalian Manajemen EKSI4416</title>
+<style>
+  :root {
+    --biru: #0096c7;
+    --biru-gelap: #023e8a;
+    --biru-muda: #e0f4ff;
+    --abu: #f5f7fa;
+    --teks: #1a1a2e;
+    --teks-ringan: #4a5568;
+    --aksen: #ff6b35;
+    --hijau: #2d6a4f;
+    --kuning: #f4a261;
+    --border: #dce3ec;
+    --jingga-muda: #fffaf0;
+    --jingga-border: #f4a261;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #f0f4f8;
+    color: var(--teks);
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--biru-gelap) 0%, var(--biru) 100%);
+    color: white;
+    padding: 40px 24px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .header-badge {
+    display: inline-block;
+    background: var(--aksen);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: clamp(20px, 4vw, 28px);
+    font-weight: 800;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .header p {
+    font-size: 14px;
+    opacity: 0.85;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* NAVIGATION */
+  .nav-bar {
+    background: white;
+    border-bottom: 2px solid var(--border);
+    padding: 0 16px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-item {
+    flex: none;
+    padding: 14px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teks-ringan);
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-item:hover { color: var(--biru); border-color: var(--biru); }
+
+  /* LAYOUT */
+  .container { max-width: 860px; margin: 0 auto; padding: 24px 16px; }
+
+  /* MODULE CARDS */
+  .modul-card {
+    background: white;
+    border-radius: 14px;
+    margin-bottom: 28px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border: 1px solid var(--border);
+  }
+  .modul-header {
+    background: linear-gradient(135deg, var(--biru-gelap), var(--biru));
+    color: white;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .modul-number {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .modul-header h2 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .modul-header span {
+    font-size: 12px;
+    opacity: 0.8;
+    display: block;
+    margin-top: 2px;
+  }
+  .modul-body { padding: 20px 24px; }
+
+  /* SECTIONS */
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--biru);
+    margin: 20px 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* CONCEPT BOXES */
+  .konsep {
+    background: var(--biru-muda);
+    border-left: 4px solid var(--biru);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  .konsep strong { color: var(--biru-gelap); display: block; margin-bottom: 4px; }
+
+  .penting {
+    background: #fff8f0;
+    border-left: 4px solid var(--aksen);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  .penting strong { color: var(--aksen); display: block; margin-bottom: 4px; }
+
+  .hijau-box {
+    background: #f0faf5;
+    border-left: 4px solid var(--hijau);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  .hijau-box strong { color: var(--hijau); display: block; margin-bottom: 4px; }
+
+  /* CASE STUDY BOX */
+  .studi-kasus {
+    background: var(--jingga-muda);
+    border-left: 4px solid var(--jingga-border);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .studi-kasus strong { color: #d94e34; display: block; margin-bottom: 6px; font-weight: 700; }
+
+  /* JEMBATAN ANTAR MODUL */
+  .jembatan {
+    background: #fdfdfd;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 15px 0;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--teks-ringan);
+  }
+
+  /* SUPERSCRIPT FOR FOOTNOTES */
+  sup a {
+    color: var(--aksen);
+    text-decoration: none;
+    font-weight: 700;
+    padding: 0 2px;
+  }
+  sup a:hover { text-decoration: underline; }
+
+  /* LISTS */
+  ul.clean { list-style: none; padding: 0; margin: 8px 0; }
+  ul.clean li {
+    padding: 6px 0 6px 20px;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+    position: relative;
+  }
+  ul.clean li::before {
+    content: '▸';
+    color: var(--biru);
+    position: absolute;
+    left: 0;
+  }
+  ul.clean li:last-child { border-bottom: none; }
+
+  /* GRID */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+    margin: 12px 0;
+  }
+
+  .grid-item {
+    background: var(--abu);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .grid-item h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--biru-gelap);
+    margin-bottom: 6px;
+  }
+  .grid-item p { font-size: 13px; color: var(--teks-ringan); }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 12px 0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th {
+    background: var(--biru-gelap);
+    color: white;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: var(--abu); }
+  tr:last-child td { border-bottom: none; }
+
+  /* DIAGRAM */
+  .diagram {
+    background: var(--abu);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin: 12px 0;
+    text-align: center;
+    font-size: 13px;
+  }
+  .arrow-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 8px 0;
+  }
+  .flow-box {
+    background: var(--biru);
+    color: white;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .flow-arrow {
+    color: var(--biru);
+    font-size: 18px;
+  }
+
+  /* HIGHLIGHT QUOTE */
+  .highlight {
+    background: linear-gradient(135deg, #023e8a11, #0096c722);
+    border: 1px solid var(--biru);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--biru-gelap);
+  }
+
+  /* FOLLY BOX */
+  .folly {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 13.5px;
+  }
+  .folly strong { color: #856404; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--teks-ringan);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    background: white;
+    margin-top: 16px;
+  }
+
+  p { font-size: 14px; color: var(--teks-ringan); margin: 6px 0; }
+  h3 { font-size: 15px; font-weight: 700; color: var(--teks); margin: 14px 0 8px; }
+
+  @media (max-width: 600px) {
+    .modul-body { padding: 16px; }
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">Persiapan UAS V3</div>
+  <h1>📚 Rangkuman Sistem Pengendalian Manajemen</h1>
+  <p>EKSI4416 · Edisi 4 · Universitas Terbuka</p>
+  <p style="margin-top:8px; font-size:12px; opacity:0.7">9 Modul Lengkap · Navigasi Responsif · Bebas Tag Sistem</p>
+</div>
+
+<div class="nav-bar">
+  <a class="nav-item" href="#peta">🗺️ Roda SPM</a>
+  <a class="nav-item" href="#m1">M1 Konsep Dasar</a>
+  <a class="nav-item" href="#m2">M2 Manajemen</a>
+  <a class="nav-item" href="#m3">M3 Strategi & Anggaran</a>
+  <a class="nav-item" href="#m4">M4 Kinerja</a>
+  <a class="nav-item" href="#m5">M5 SDM</a>
+  <a class="nav-item" href="#m6">M6 Keuangan</a>
+  <a class="nav-item" href="#m7">M7 Pemasaran</a>
+  <a class="nav-item" href="#m8">M8 Produksi</a>
+  <a class="nav-item" href="#m9">M9 Nirlaba</a>
+</div>
+
+<div class="container">
+
+<div class="modul-card" id="peta">
+  <div class="modul-header" style="background: linear-gradient(135deg, #2b2d42, #8d99ae);">
+    <div class="modul-number">🗺️</div>
+    <div>
+      <h2>Peta Perjalanan Belajar: Roda Kehidupan SPM</h2>
+      <span>Pahami hubungan logis antar modul sebelum mulai membaca teori detail</span>
+    </div>
+  </div>
+  <div class="modul-body">
+    <p>Sistem Pengendalian Manajemen (SPM) bukanlah serangkaian definisi mati, melainkan sebuah siklus hidup roda organisasi yang berputar terus-menerus:</p>
+    <div class="diagram">
+      <div class="arrow-flow">
+        <div class="flow-box" style="background:#e76f51">1. Tahap Idealisme (M2 & M3)<br>Misi & Strategi</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="background:#f4a261">2. Tahap Angka (M3)<br>Anggaran Keuangan</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="background:#2a9d8f">3. Tahap Operasional (M5-M8)<br>SDM, Uang, Pasar, Produksi</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="background:#1d3557">4. Tahap Evaluasi (M1 & M4)<br>Ukur Kinerja & Reward</div>
+      </div>
+    </div>
+    <div class="studi-kasus">
+      <strong>☕ Kompas Utama Belajar: Kasus Jangkar "PT Kopi Sukses Bersama (PT KSB)"</strong>
+      Untuk mempermudah pemahaman, kita akan membayangkan sebuah bisnis nyata bernama <strong>PT KSB</strong>. Perusahaan ini memiliki kebun kopi sendiri (Divisi Hulu/Produksi) dan jaringan outlet kedai kopi modern (Divisi Hilir/Pemasaran). Seluruh konsep abstrak dari Modul 1 hingga 9 akan dibedah menggunakan contoh kedai kopi ini!
+    </div>
+  </div>
+</div>
+
+<div class="modul-card" id="m1">
+  <div class="modul-header">
+    <div class="modul-number">1</div>
+    <div>
+      <h2>Konsep Dasar Sistem Pengendalian</h2>
+      <span>Pengertian · Tujuan · Fungsi · Jenis Tipe · Desain & Evaluasi</span>
+    </div>
+  </div>
+  <div class="modul-body">
+
+    <div class="studi-kasus">
+      <strong>💡 Logika Kasus PT KSB:</strong>
+      Bagaimana pemilik PT KSB memastikan seluruh barista di cabang tidak mencuri uang kasir atau membuang-buang susu mahal? Jawabannya: Pemilik butuh sebuah <strong>Sistem Pengendalian</strong>.
+    </div>
+
+    <div class="section-title">Pengertian Sistem & Pengendalian</div>
+
+    <div class="konsep">
+      <strong>Sistem</strong><sup><a href="#fn1">[1]</a></sup>
+      Kumpulan dua atau lebih komponen yang saling bekerja sama dan berhubungan untuk mencapai tujuan tertentu. Jika satu komponen gagal, seluruh sistem terganggu.
+    </div>
+
+    <div class="konsep">
+      <strong>Pengendalian</strong>
+      Digunakan manajer agar seluruh komponen organisasi berjalan sesuai rencana. Pengendalian = refleksi dari perencanaan. Alat paling umum = <strong>Anggaran</strong>.
+    </div>
+
+    <div class="section-title">4 Elemen Proses Kendali</div>
+    <div class="diagram">
+      <div class="arrow-flow">
+        <div class="flow-box">Detektor</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Asesor</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Efektor</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Jaringan Komunikasi</div>
+      </div>
+      <p style="margin-top:8px; font-size:12px"><sup><a href="#fn2">[2]</a></sup> Detektor = mengukur kejadian | Asesor = bandingkan dengan standar | Efektor = mengubah perilaku | Komunikasi = transmisi data</p>
+    </div>
+    <div class="studi-kasus">
+      <strong>☕ Aplikasi Kerja Elemen di PT KSB:</strong>
+      Mesin kasir POS mencatat penjualan harian (<strong>Detektor</strong>). Manajer membandingkan penjualan riil dengan target harian (<strong>Asesor</strong>). Jika penjualan drop karena barista malas, manajer menegur barista tersebut (<strong>Efektor</strong>). Seluruh instruksi ini mengalir lewat grup WhatsApp internal (<strong>Jaringan Komunikasi</strong>).
+    </div>
+
+    <div class="section-title">Fungsi Sistem Pengendalian</div>
+    <ul class="clean">
+      <li><strong>Kejelasan Arahan</strong> — Tanpa arah yang jelas, pegawai bisa gagal meski tugasnya mudah *(Contoh: Barista diberi SOP tertulis takaran gramasi bubuk kopi).*</li>
+      <li><strong>Motivasi</strong> — Menyelaraskan tujuan individu dengan tujuan organisasi</li>
+      <li><strong>Mengatasi Keterbatasan Individu</strong> — Sistem mengidentifikasi & menutup celah kompetensi</li>
+      <li><strong>Pengendalian Interaktif</strong> — Dasar pembuatan strategi baru di masa mendatang</li>
+    </ul>
+
+    <div class="section-title">Sudut Pandang Faktor yang Dikendalikan</div>
+    <div class="grid-2">
+      <div class="grid-item">
+        <h4>🏢 Faktor Internal</h4>
+        <p>Memastikan semua elemen dalam organisasi memahami tujuan dan cara memaksimalkan sumber daya untuk mencapainya. *(Contoh KSB: Pelatihan kebersihan mesin espresso).*</p>
+      </div>
+      <div class="grid-item">
+        <h4>🌍 Faktor Eksternal</h4>
+        <p>Mengamati dampak lingkungan luar yang dapat mempengaruhi pencapaian tujuan. Bersifat dinamis dan luas. *(Contoh KSB: Kenaikan harga biji kopi dunia atau tren pasar terbaru).*</p>
+      </div>
+    </div>
+
+    <div class="section-title">Jenis Tipe Pengendalian</div>
+
+    <div class="penting">
+      <strong>A. Pengendalian Tindakan (Action Control)</strong><sup><a href="#fn3">[3]</a></sup>
+      Berfokus pada pengendalian aktivitas yang berkaitan dengan pencapaian tujuan.
+    </div>
+    <ul class="clean">
+      <li><strong>Pembatasan Tindakan</strong> — Fisik (kunci gudang kopi, password mesin kasir) & Administratif (batas otorisasi diskon oleh supervisor)</li>
+      <li><strong>Pengecekan Sebelum Bekerja</strong> — Review rencana menu musiman sebelum disetujui pimpinan</li>
+      <li><strong>Akuntabilitas Tindakan</strong> — Definisikan, komunikasikan, amati, beri reward/punishment</li>
+      <li><strong>Redundansi</strong> — Komponen cadangan (menempatkan 2 kasir saat jam sibuk untuk saling cek silang)</li>
+    </ul>
+
+    <div class="penting">
+      <strong>B. Pengendalian Hasil (Result Control)</strong>
+      Berorientasi pada performa akhir. Disebut juga pengendalian terdesentralisasi. *(Contoh KSB: Bos tidak mau tahu caranya, yang penting outlet cabang Bandung harus untung Rp50 juta sebulan).*
+    </div>
+    <ul class="clean">
+      <li>Mendefinisikan dimensi kinerja</li>
+      <li>Mengukur kinerja (finansial: ROI, EPS | non-finansial: rating kepuasan pelanggan di aplikasi)</li>
+      <li>Membuat target kinerja</li>
+      <li>Membuat skema reward & punishment</li>
+    </ul>
+
+    <div class="penting">
+      <strong>C. Pengendalian Personil & Budaya</strong>
+      Pengendalian melalui seleksi SDM yang jujur, pelatihan ramah lingkungan, dan pembentukan budaya integritas organisasi.
+    </div>
+
+    <div class="section-title">Menghindari Masalah dalam Pengendalian</div>
+    <div class="grid-2">
+      <div class="grid-item">
+        <h4>1. Eliminasi Aktivitas</h4>
+        <p>Tidak melakukan aktivitas berisiko tinggi. Contoh KSB: Daripada pusing mengurus pengiriman logistik sendiri yang rawan bocor, KSB menyerahkan pengiriman ke pihak ketiga (outsourcing).</p>
+      </div>
+      <div class="grid-item">
+        <h4>2. Otomatisasi</h4>
+        <p>Memanfaatkan teknologi untuk mengurangi human error. Contoh KSB: Menggunakan mesin roasting kopi otomatis berbasis komputer.</p>
+      </div>
+      <div class="grid-item">
+        <h4>3. Sentralisasi</h4>
+        <p>Memusatkan keputusan penting pada kantor pusat. Contoh KSB: Pengeluaran uang di atas Rp5 juta wajib tanda tangan Direktur Utama.</p>
+      </div>
+      <div class="grid-item">
+        <h4>4. Membagi/Menyebar Risiko</h4>
+        <p>Distribusikan risiko ke berbagai pihak, misalnya membeli asuransi kebakaran untuk ruko kedai kopi.</p>
+      </div>
+    </div>
+
+    <div class="jembatan">
+      <strong>🔗 Jembatan Menuju Modul 2:</strong>
+      Kita sudah paham apa itu sistem pengendalian. Pertanyaannya, siapa yang merancang dan menjalankan instrumen pengendalian ini di dalam perusahaan? Jawabannya ada pada struktur <strong>Manajemen</strong> yang akan kita bedah di modul berikutnya.
+    </div>
+
+  </div>
+</div>
+
+<div class="modul-card" id="m2">
+  <div class="modul-header">
+    <div class="modul-number">2</div>
+    <div>
+      <h2>Konsep Dasar Manajemen</h2>
+      <span>Fungsi · Peran · Aktivitas · Lingkungan & Budaya</span>
+    </div>
+  </div>
+  <div class="modul-body">
+
+    <div class="section-title">4 Fungsi Utama Manajemen</div>
+    <div class="grid-2">
+      <div class="grid-item">
+        <h4>📋 Planning (Perencanaan)</h4>
+        <p>Menetapkan tujuan organisasi dan cara mencapainya. *(Contoh KSB: Berencana membuka 5 cabang baru tahun ini).*</p>
+      </div>
+      <div class="grid-item">
+        <h4>🏗️ Organizing (Pengorganisasian)</h4>
+        <p>Memastikan ketersediaan SDM & fasilitas fisik serta membagi departemen kerja. *(Contoh KSB: Memisahkan tim pembuat kopi dengan tim akunting).*</p>
+      </div>
+      <div class="grid-item">
+        <h4>🚀 Actuating (Penggerakan)</h4>
+        <p>Pelaksanaan rencana, memastikan setiap SDM bekerja sesuai kompetensinya. *(Contoh KSB: Barista mulai menyeduh kopi di jam operasional).*</p>
+      </div>
+      <div class="grid-item">
+        <h4>🔍 Controlling (Pengendalian)</h4>
+        <p>Supervisi, pengawasan, inspeksi, dan audit agar penyimpangan terdeteksi sejak dini. *(Contoh KSB: Sidak kebersihan dapur kedai secara mendadak).*</p>
+      </div>
+    </div>
+
+    <div class="section-title">Tingkatan Manajemen</div>
+    <table>
+      <tr>
+        <th>Tingkatan</th>
+        <th>Peran Utama</th>
+        <th>Contoh Nyata di PT KSB</th>
+      </tr>
+      <tr>
+        <td><strong>Top Management</strong></td>
+        <td>Menetapkan visi, misi, dan arah strategis jangka panjang organisasi</td>
+        <td>CEO / Pemilik Kedai Kopi PT KSB</td>
+      </tr>
+      <tr>
+        <td><strong>Middle Management</strong></td>
+        <td>Menerjemahkan strategi ke program kerja operasional per wilayah</td>
+        <td>Manajer Wilayah / Kepala Departemen Keuangan</td>
+      </tr>
+      <tr>
+        <td><strong>First-line Management</strong></td>
+        <td>Pengawasan langsung pelaksanaan pekerjaan harian</td>
+        <td>Supervisor Outlet / Kepala Barista Cabang</td>
+      </tr>
+    </table>
+
+    <div class="section-title">Aktivitas Manajemen — 4 Prinsip Perencanaan</div>
+    <ul class="clean">
+      <li><strong>Kontribusi pada tujuan</strong> — Setiap rencana kecil harus mendukung tujuan besar PT KSB.<sup><a href="#fn4">[4]</a></sup></li>
+      <li><strong>Aspek primer</strong> — Rencana adalah landasan utama sebelum memulai pelaksanaan dan pengendalian.</li>
+      <li><strong>Daya resap</strong> — Rencana harus dipahami dan dapat dieksekusi secara maksimal oleh seluruh level karyawan.</li>
+      <li><strong>Efisiensi</strong> — Rencana dirancang untuk memberi untung besar dengan pengorbanan biaya seminimal mungkin.</li>
+    </ul>
+
+    <div class="section-title">Lingkungan & Budaya Manajemen</div>
+    <div class="konsep">
+      <strong>Corporate Social Responsibility (CSR)</strong>
+      Bentuk tanggung jawab sosial perusahaan kepada masyarakat sekitar.
+      <br><em>Contoh KSB: PT KSB membagikan pupuk organik gratis yang terbuat dari ampas limbah kopi kepada para petani di sekitar perkebunan mereka.</em>
+    </div>
+
+    <div class="jembatan">
+      <strong>🔗 Jembatan Menuju Modul 3:</strong>
+      Struktur manajemen sudah terbentuk dari atas sampai bawah. Langkah selanjutnya adalah bagaimana top management mulai menyusun **Rencana Strategis** jangka panjang dan menurunkannya ke dalam bentuk angka operasional setahun yang kita sebut **Anggaran**.
+    </div>
+
+  </div>
+</div>
+
+<div class="modul-card" id="m3">
+  <div class="modul-header">
+    <div class="modul-number">3</div>
+    <div>
+      <h2>Proses Pengendalian: Perencanaan Strategis & Anggaran</h2>
+      <span>Karakteristik Pengendalian Baik · Perencanaan Strategis · Penyusunan Anggaran</span>
+    </div>
+  </div>
+  <div class="modul-body">
+
+    <div class="section-title">Karakteristik Pengendalian Manajemen yang Baik</div>
+    <div class="highlight">
+      Sistem pengendalian yang baik harus sudah dapat mengetahui berbagai potensi masalah yang mungkin dihadapi ke depan, dan juga berbagai alternatif pemecahan masalah tersebut.
+    </div>
+    <p>Apabila biaya pembuatan sistem pengendalian tidak sebanding dengan manfaatnya atau justru menimbulkan kerugian karena kecolongan, kondisi ini disebut <strong>Control Loss</strong> (kerugian akibat kegagalan pengendalian).</p>
+
+    <div class="section-title">5 Tahapan Perencanaan Strategis (Aplikasi di PT KSB)</div>
+    <div class="grid-2">
+      <div class="grid-item">
+        <h4>1️⃣ Merancang Visi, Misi & Sasaran</h4>
+        <p>Visi KSB: "Menjadi jaringan kedai kopi lokal nomor satu yang ramah lingkungan." Jika arah ini tidak jelas, operasional akan berantakan.</p>
+      </div>
+      <div class="grid-item">
+        <h4>2️⃣ Memahami Kondisi Saat Ini</h4>
+        <p>Analisis SWOT: Kekuatan KSB ada pada biji kopi segar langsung dari kebun sendiri, namun kelemahannya ada pada modal yang terbatas.</p>
+      </div>
+      <div class="grid-item">
+        <h4>3️⃣ Menentukan Prioritas Kerja</h4>
+        <p>Karena modal terbatas, KSB memilih fokus memprioritaskan perbaikan kualitas menu outlet yang sudah ada daripada nekat buka cabang baru.</p>
+      </div>
+      <div class="grid-item">
+        <h4>4️⃣ Menyusun Strategi Pencapaian</h4>
+        <p>Membuat program nyata: Mengadakan pelatihan barista kelas dunia dan meluncurkan varian menu berkala beserta jadwal eksekusinya.</p>
+      </div>
+    </div>
+    <div class="konsep">
+      <strong>5️⃣ Memonitor & Memperbarui</strong>
+      Manajemen mengecek hasil penjualan setiap bulan. Jika strategi menu baru gagal menarik minat pembeli, manajemen segera melakukan revisi tindakan korektif.
+    </div>
+
+    <div class="section-title">Jenis Strategi Berdasarkan Tujuan</div>
+    <div class="grid-2">
+      <div class="grid-item">
+        <h4>📈 Strategi Pertumbuhan</h4>
+        <p>Ekspansi memperbesar bisnis. *(Contoh KSB: Membuka waralaba kemitraan secara masif di luar pulau).*</p>
+      </div>
+      <div class="grid-item">
+        <h4>📉 Strategi Pengurangan</h4>
+        <p>Mengurangi aktivitas merugi. *(Contoh KSB: Menutup menu frappe rasa matcha karena sepi pembeli).*</p>
+      </div>
+      <div class="grid-item">
+        <h4>⚖️ Strategi Stabilitas</h4>
+        <p>Fokus mempertahankan kualitas tanpa ekspansi ugal-ugalan. *(Contoh KSB: Mempertahankan kualitas rasa kopi susu gula aren).*</p>
+      </div>
+      <div class="grid-item">
+        <h4>🔀 Strategi Kombinasi</h4>
+        <p>Mencampur berbagai strategi di atas sesuai kondisi unik tiap cabang.</p>
+      </div>
+    </div>
+
+    <div class="section-title">Penyusunan Anggaran</div>
+    <div class="konsep">
+      <strong>Definisi Anggaran</strong>
+      Rencana kerja organisasi yang dituangkan dalam angka keuangan untuk periode waktu tertentu. 3 Karakteristik utama: (1) mengestimasi potensi laba; (2) dinyatakan dalam satuan mata uang; (3) umumnya mencakup jangka waktu satu tahun.
+    </div>
+
+    <div class="section-title">6 Urutan Proses Penyusunan Anggaran di PT KSB</div>
+    <div class="arrow-flow" style="flex-direction: column; align-items: flex-start; gap: 6px; padding: 8px 0;">
+      <div style="display:flex; align-items:center; gap:8px"><div class="flow-box" style="font-size:11px; min-width:200px">1. Penetapan Pedoman Anggaran</div><span style="font-size:12px; color:var(--teks-ringan)">Kantor pusat menetapkan aturan main pembuatan anggaran tahun depan.</span></div>
+      <div style="color:var(--biru); padding-left:10px">↓</div>
+      <div style="display:flex; align-items:center; gap:8px"><div class="flow-box" style="font-size:11px; min-width:200px">2. Persiapan Anggaran</div><span style="font-size:12px; color:var(--teks-ringan)">Membuat ramalan tren penjualan (*forecasting*) cup kopi tahun depan.</span></div>
+      <div style="color:var(--biru); padding-left:10px">↓</div>
+      <div style="display:flex; align-items:center; gap:8px"><div class="flow-box" style="font-size:11px; min-width:200px">3. Penentuan Anggaran</div><span style="font-size:12px; color:var(--teks-ringan)">Rapat koordinasi antar kepala divisi, penelaahan, dan pengesahan resmi.</span></div>
+      <div style="color:var(--biru); padding-left:10px">↓</div>
+      <div style="display:flex; align-items:center; gap:8px"><div class="flow-box" style="font-size:11px; min-width:200px">4. Pelaksanaan Anggaran</div><span style="font-size:12px; color:var(--teks-ringan)">Dana diturunkan, kedai mulai beroperasi dan mencatat realisasi biaya harian.</span></div>
+      <div style="color:var(--biru); padding-left:10px">↓</div>
+      <div style="display:flex; align-items:center; gap:8px"><div class="flow-box" style="font-size:11px; min-width:200px">5. Review & Persetujuan</div><span style="font-size:12px; color:var(--teks-ringan)">Pihak manajemen puncak menguji dan menyetujui efisiensi penggunaan dana.</span></div>
+      <div style="color:var(--biru); padding-left:10px">↓</div>
+      <div style="display:flex; align-items:center; gap:8px"><div class="flow-box" style="font-size:11px; min-width:200px">6. Revisi Anggaran</div><span style="font-size:12px; color:var(--teks-ringan)">Dilakukan secara periodik jika ada lonjakan inflasi harga bahan baku susu di pasar.</span></div>
+    </div>
+
+    <div class="jembatan">
+      <strong>🔗 Jembatan Menuju Modul 4:</strong>
+      Rencana sudah matang dan anggaran operasional sudah dikunci. Ketika tahun berjalan selesai, bagaimana cara kita menilai apakah kinerja riil para manajer cabang sukses mencapai target anggaran tersebut? Kita butuh instrumen **Pengukuran Kinerja dan Skema Kompensasi**.
+    </div>
+
+  </div>
+</div>
+
+<div class="modul-card" id="m4">
+  <div class="modul-header">
+    <div class="modul-number">4</div>
+    <div>
+      <h2>Pengukuran & Penilaian Kinerja + Manajemen Kompensasi</h2>
+      <span>KPI · Balanced Scorecard · Sistem Reward · Folly</span>
+    </div>
+  </div>
+  <div class="modul-body">
+
+    <div class="section-title">Pengukuran vs Penilaian Kinerja</div>
+    <div class="grid-2">
+      <div class="grid-item">
+        <h4>📏 Pengukuran Kinerja</h4>
+        <p>Bersifat <strong>kuantitatif</strong> (angka pasti). Diperoleh melalui laporan formal akuntansi. *Contoh KSB: Mencatat jumlah cup kopi yang terjual (9.500 cup dari target 10.000 cup).*</p>
+      </div>
+      <div class="grid-item">
+        <h4>⭐ Penilaian Kinerja</h4>
+        <p>Bersifat <strong>kualitatif</strong> (subjektif/nilai mutu). Dievaluasi melalui wawancara dan pengamatan langsung. *Contoh KSB: Menilai loyalitas kejujuran barista dan kebersihan seragam mereka.*</p>
+      </div>
+    </div>
+
+    <div class="section-title">3 Aspek Formal Pengukuran Kinerja</div>
+    <ul class="clean">
+      <li><strong>Ukuran-ukuran (variabel)</strong><sup><a href="#fn5">[5]</a></sup> — Tolak ukur baku yang disepakati bersama.</li>
+      <li><strong>Proses pengukuran</strong> — Bagaimana cara manajemen mengumpulkan, mengolah, dan melaporkan data kinerja tersebut.</li>
+      <li><strong>Penggunaan hasil</strong> — Menentukan keputusan kelanjutan kontrak kerja atau besaran bonus.</li>
+    </ul>
+
+    <div class="section-title">Dimensi Pengukuran Kinerja di PT KSB</div>
+    <div class="grid-2">
+      <div class="grid-item">
+        <h4>💰 Dimensi Finansial</h4>
+        <p>Melihat angka laba bersih outlet (*Net Income*), pertumbuhan omset, atau tingkat pengembalian modal investasi (*ROI*).</p>
+      </div>
+      <div class="grid-item">
+        <h4>📊 Dimensi Non-Finansial</h4>
+        <p>Melihat tingkat kepuasan pelanggan lewat ulasan bintang, kecepatan pembuatan kopi, atau tingkat retensi karyawan.</p>
+      </div>
+    </div>
+
+    <div class="section-title">Manajemen Kompensasi: 5 Jenis Keadilan</div>
+    <table>
+      <tr>
+        <th>Jenis Keadilan</th>
+        <th>Definisi Teori<sup><a href="#fn6">[6]</a></sup></th>
+        <th>Contoh Nyata di PT KSB</th>
+      </tr>
+      <tr>
+        <td><strong>Substantif</strong></td>
+        <td>Kesesuaian antara hadiah dengan perilaku yang diharapkan</td>
+        <td>Bonus cair karena barista terbukti bekerja ramah, bukan karena cari muka.</td>
+      </tr>
+      <tr>
+        <td><strong>Prosedural</strong></td>
+        <td>Keadilan dalam proses rumus perhitungan bonus</td>
+        <td>Rumus hitung kompensasi transparan, tercantum di slip gaji tanpa bisnis internal.</td>
+      </tr>
+      <tr>
+        <td><strong>Internal</strong></td>
+        <td>Keadilan antar posisi jabatan di dalam satu organisasi</td>
+        <td>Gaji Manajer Kedai wajar jika lebih tinggi dari gaji Barista Pemula.</td>
+      </tr>
+      <tr>
+        <td><strong>Eksternal</strong></td>
+        <td>Kompetitif jika dibanding standar perusahaan pesaing</td>
+        <td>Gaji barista di PT KSB setara atau lebih tinggi dari gaji barista kompetitor sejenis.</td>
+      </tr>
+      <tr>
+        <td><strong>Individual</strong></td>
+        <td>Proporsional sesuai kontribusi kerja per orang</td>
+        <td>Barista A yang rajin lembur mendapat kompensasi lebih besar dari Barista B yang pasif.</td>
+      </tr>
+    </table>
+
+    <div class="section-title">⚠️ Konsep Kunci UAS: Folly of Rewarding A While Hoping for B</div>
+    <div class="folly">
+      <strong>Kesalahan Fatal Sistem Penghargaan!</strong><br>
+      Kondisi eror di mana manajemen <em>mengharapkan perilaku B</em>, tetapi sistem insentifnya justru keliru <em>memberikan reward untuk perilaku A</em>.<br><br>
+      <strong>💥 Contoh Hancurnya Pengendalian di PT KSB:</strong><br>
+      Manajemen puncak KSB sangat <strong>mengharapkan keramahan pelayanan dan kepuasan pelanggan (B)</strong>. Namun, rumus bonus bulanan barista <strong>hanya dihitung berdasarkan kecepatan durasi pembuatan kopi per cup (A)</strong>. <br><br>
+      <strong>Akibatnya:</strong> Barista akan bekerja super terburu-buru, melempar pesanan cup ke meja, dan bersikap judes kepada pelanggan demi mengejar target kecepatan waktu (A). Target kepuasan pelanggan (B) gagal total karena rusaknya keadilan dalam sistem kompensasi!
+    </div>
+
+    <div class="jembatan">
+      <strong>🔗 Jembatan Menuju Modul 5:</strong>
+      Sistem kompensasi dan tolak ukur kinerja sudah dipahami. Namun, seluruh sistem hebat ini tidak akan berjalan tanpa adanya manusia. Bagaimana cara menyaring, mendidik, dan mengendalikan karakter manusia yang unik di dalam organisasi? Kita pelajari hal tersebut di **Manajemen SDM**.
+    </div>
+
+  </div>
+</div>
+
+<div class="modul-card" id="m5">
+  <div class="modul-header">
+    <div class="modul-number">5</div>
+    <div>
+      <h2>Sistem Pengendalian Manajemen SDM</h2>
+      <span>Fungsi MSDM · Rekrutmen & Seleksi · Pengendalian SDM</span>
+    </div>
+  </div>
+  <div class="modul-body">
+
+    <div class="konsep">
+      <strong>Karakteristik Unik Pengendalian SDM</strong><sup><a href="#fn7">[7]</a></sup>
+      Pengendalian manusia wajib bersifat <em>fleksibel</em> karena setiap individu memiliki kepribadian dan watak yang unik. Sistem kendali harus dinamis menyesuaikan personal, tidak bisa sekaku mesin pabrik.
+    </div>
+
+    <div class="section-title">5 Fungsi Utama MSDM (Penerapan Rekrutmen Barista PT KSB)</div>
+
+    <div class="hijau-box">
+      <strong>1. Perencanaan</strong>
+      Menganalisis kebutuhan tenaga kerja. *Contoh KSB: Menghitung bahwa outlet cabang Yogyakarta kekurangan 2 orang barista, lalu membuat spesifikasi syarat keahlian latte art.*
+    </div>
+    <div class="hijau-box">
+      <strong>2. Rekrutmen & Seleksi</strong>
+      Menyaring pelamar kerja. *Alur KSB: Seleksi berkas CV → Tes praktik menyeduh kopi v60 → Wawancara sikap kerja → Cek kesehatan.*
+    </div>
+    <div class="hijau-box">
+      <strong>3. Pelatihan & Pengembangan Kerja</strong>
+      Menutup celah kompetensi pegawai baru. *Contoh KSB: Barista baru wajib mengikuti training pengoperasian mesin espresso otomatis selama 2 minggu sebelum terjun ke outlet.*
+    </div>
+    <div class="hijau-box">
+      <strong>4. Penilaian & Kompensasi Kinerja</strong>
+      Membandingkan target jualan bulanan karyawan dengan realisasi riil di lapangan, lalu mencairkan insentif komisi bonus yang adil.
+    </div>
+    <div class="hijau-box">
+      <strong>5. Promosi, Pemindahan & Pemisahan</strong>
+      Tindak lanjut evaluasi. Barista berkinerja unggul naik jabatan jadi Kepala Outlet (Promosi). Barista bermasalah dipindah cabang (Pemindahan), dan yang terbukti korupsi uang kasir langsung dipecat (Pemisahan/PHK).
+    </div>
+
+    <div class="section-title">Pengendalian Internal dalam Rekrutmen & Seleksi</div>
+    <ul class="clean">
+      <li><strong>Pemisahan Tugas (*Segregation of Duties*)</strong> — Tim yang mengetes kemampuan membuat kopi harus dipisah dengan tim keuangan yang menentukan penawaran nominal gaji, demi menghindari nepotisme internal.</li>
+      <li>Standardisasi instrumen seleksi berupa lembar penilaian skor wawancara yang baku.</li>
+      <li>Verifikasi ketat rekam jejak surat pengalaman kerja dari kedai kopi sebelumnya.</li>
+    </ul>
+
+    <div class="jembatan">
+      <strong>🔗 Jembatan Menuju Modul 6:</strong>
+      Urusan pengelolaan manusia dan perilakunya sudah dikunci lewat MSDM. Sekarang, kita beralih ke urusan instrumen darah utama bisnis operasional komersial, yaitu **Manajemen Keuangan** dan trik negosiasi harga internal antar divisi (*Transfer Pricing*).
+    </div>
+
+  </div>
+</div>
+
+<div class="modul-card" id="m6">
+  <div class="modul-header">
+    <div class="modul-number">6</div>
+    <div>
+      <h2>Sistem Pengendalian Manajemen Keuangan</h2>
+      <span>Aktivitas Keuangan · Transfer Pricing · Pengendalian Keuangan</span>
+    </div>
+  </div>
+  <div class="modul-body">
+
+    <div class="section-title">Mekanisme Transfer Pricing di PT KSB</div>
+    <div class="konsep">
+      <strong>Konsep Utama Transfer Pricing</strong>
+      Kondisi di mana perusahaan memberikan kebebasan otonomi penuh kepada setiap divisi internal untuk berbisnis demi menghasilkan manfaat terbesar bagi divisi masing-masing. Transaksi barang antar divisi ini menggunakan harga kesepakatan bernama **Transfer Price**.
+    </div>
+    <p><strong>☕ Simulasi Kasus Nyata di PT KSB:</strong><br>
+    PT KSB memiliki <strong>Divisi Perkebunan Kopi</strong> (Hulu) dan <strong>Divisi Jaringan Kedai Kopi</strong> (Hilir). Divisi Kedai Kopi membutuhkan suplai bahan baku biji kopi berkualitas. Kantor pusat menyarankan Divisi Kedai membeli langsung dari Divisi Perkebunan sendiri demi efisiensi grup perusahaan. Namun, penentuan harganya harus adil, tidak boleh terlalu mahal ataupun terlalu murah, agar kinerja profit masing-masing divisi tidak timpang sebelah.
+    </p>
+
+    <div class="section-title">Dampak Negatif Transfer Pricing yang Keliru / Tidak Tepat</div>
+    <ul class="clean">
+      <li>Terjadi penyimpangan pencapaian sasaran utama perusahaan (*Goal Congruence* terganggu).</li>
+      <li>Timbul permusuhan dan persaingan tidak sehat antar manajer divisi internal. *Contoh: Manajer Kedai Kopi sengaja membeli biji kopi dari pihak luar karena harga dari Divisi Perkebunan sendiri dinilai terlalu tinggi.*</li>
+      <li>Penyelewengan pemanfaatan aset dan wewenang operasional.</li>
+    </ul>
+
+    <div class="section-title">Metode Pengendalian Manajemen Keuangan</div>
+    <div class="grid-2">
+      <div class="grid-item">
+        <h4>🏢 Sentralisasi Pengendalian</h4>
+        <p>Seluruh standarisasi laporan keuangan, audit internal baku, dan verifikasi alokasi anggaran dikontrol ketat langsung oleh Direktur Keuangan di kantor pusat.</p>
+      </div>
+      <div class="grid-item">
+        <h4>📊 Pembagian Tugas</h4>
+        <p>Membagi wewenang otorisasi keuangan secara jelas antara manajemen kantor pusat dan manajemen lokal di tiap cabang demi kelancaran rantai komunikasi data.</p>
+      </div>
+    </div>
+
+    <div class="jembatan">
+      <strong>🔗 Jembatan Menuju Modul 7:</strong>
+      Urusan pengelolaan keuangan internal dan patokan harga transaksi antar divisi sudah beres. Sekarang, bagaimana cara produk kopi berkualitas yang didanai modal aman tersebut bisa laku keras dipasarkan keluar ke tangan konsumen? Mari kita bedah **Sistem Pengendalian Pemasaran**.
+    </div>
+
+  </div>
+</div>
+
+<div class="modul-card" id="m7">
+  <div class="modul-header">
+    <div class="modul-number">7</div>
+    <div>
+      <h2>Sistem Pengendalian Manajemen Pemasaran</h2>
+      <span>Bauran Pemasaran · Strategi Komunikasi · Pengendalian Pemasaran</span>
+    </div>
+  </div>
+  <div class="modul-body">
+
+    <div class="section-title">Bauran Pemasaran (4P) di PT KSB</div>
+    <div class="grid-2">
+      <div class="grid-item"><h4>🎯 Product (Produk)</h4><p>Menjaga konsistensi cita rasa es kopi susu aren, kemasan anti tumpah, dan inovasi ukuran cup.</p></div>
+      <div class="grid-item"><h4>💲 Price (Harga)</h4><p>Menetapkan harga bersaing di angka Rp20.000, pas dengan kantong mahasiswa.</p></div>
+      <div class="grid-item"><h4>📍 Place (Tempat)</h4><p>Pemilihan lokasi ruko strategis dekat area kampus dan menyediakan fasilitas colokan Wi-Fi kencang.</p></div>
+      <div class="grid-item"><h4>📢 Promotion (Promosi)</h4><p>Strategi iklan lewat influencer media sosial dan promo diskon khusus di hari tertentu.</p></div>
+    </div>
+
+    <div class="section-title">Strategi Komunikasi Pemasaran</div>
+    <div class="konsep">
+      <strong>Definisi Inti</strong><sup><a href="#fn8">[8]</a></sup>
+      Rencana terpadu penyampaian pesan merek yang konsisten kepada target audiens yang tepat melalui media yang pas pada momen terbaik, guna membangun kesadaran merek jangka panjang.
+    </div>
+
+    <div class="section-title">Metode Pengendalian Aktivitas Pemasaran</div>
+    <ul class="clean">
+      <li><strong>Integrasi Sistem IT</strong> — Menghubungkan seluruh data promosi diskon di aplikasi kasir cabang langsung ke dasbor pantau manajer pemasaran pusat untuk mendeteksi penyalahgunaan wewenang diskon.</li>
+      <li>Melakukan riset kepuasan pelanggan secara berkala melalui kuesioner digital sebelum meluncurkan menu promosi baru.</li>
+    </ul>
+
+    <div class="section-title">Indikator Kinerja Pemasaran yang Wajib Dipantau</div>
+    <div class="grid-2">
+      <div class="grid-item"><p>📈 Pangsa Pasar (*Market Share*) dibanding kompetitor</p></div>
+      <div class="grid-item"><p>😊 Skor indeks kepuasan ulasan pelanggan</p></div>
+      <div class="grid-item"><p>🔄 Tingkat retensi loyalitas pembeli lama (*Repeat Order*)</p></div>
+    </div>
+
+    <div class="jembatan">
+      <strong>🔗 Jembatan Menuju Modul 8:</strong>
+      Tim pemasaran sudah tahu cara menjual produk secara masif. Namun, tim marketing tidak akan punya barang untuk dijual jika dapur produksi mogok kerja. Bagaimana cara mengendalikan efisiensi pabrik pembuatan pasokan kopi? Kita masuk ke **Sistem Pengendalian Produksi**.
+    </div>
+
+  </div>
+</div>
+
+<div class="modul-card" id="m8">
+  <div class="modul-header">
+    <div class="modul-number">8</div>
+    <div>
+      <h2>Sistem Pengendalian Manajemen Produksi</h2>
+      <span>Aktivitas Produksi · Faktor Produksi · R&D · Pengendalian Produksi</span>
+    </div>
+  </div>
+  <div class="modul-body">
+
+    <div class="section-title">4 Faktor Produksi di Pabrik Pengolahan Kopi PT KSB</div>
+    <div class="grid-2">
+      <div class="grid-item"><h4>👨‍💼 Tenaga Kerja</h4><p>Para buruh pemetik biji kopi di kebun dan kru pemanggang (*Roaster*) di gudang produksi.</p></div>
+      <div class="grid-item"><h4>🏭 Modal & Mesin</h4><p>Investasi mesin roasting berkapasitas besar dan mesin pengemas kedap udara standar industri.</p></div>
+      <div class="grid-item"><h4>🌿 Bahan Baku</h4><p>Stok buah ceri kopi segar kualitas prima, pasokan gula aren murni, dan susu cair segar.</p></div>
+      <div class="grid-item"><h4>⚙️ Metode/Proses</h4><p>SOP ketat penentuan durasi roasting (misal: *Medium Roast*) agar aroma kopi selalu seragam.</p></div>
+    </div>
+
+    <div class="section-title">Seksi Penelitian & Pengembangan (R&D)</div>
+    <div class="konsep">
+      <strong>Inovasi Adalah Keharusan Mutlak!</strong>
+      Inovasi wajib terus digulirkan demi mempertahankan prestasi bisnis dan menghindari kebosanan pasar akibat proses operasional yang monoton. 
+      <br><em>*Contoh KSB: Tim R&D PT KSB sukses meracik menu inovasi baru "Kopi Susu Rasa Pandan Kaleng" sehingga perusahaan berhasil membuka ceruk pasar baru di minimarket.</em>
+    </div>
+
+    <div class="section-title">Analisis Faktor Produksi Sebagai Alat Pengendalian</div>
+    <div class="hijau-box">
+      <strong>Kenapa Masuk Teori Pengendalian?</strong>
+      Karena proses analisis kuantitatif yang cermat terhadap efisiensi pemakaian bahan baku (misal: menghitung berapa gram biji kopi yang terbuang sia-sia saat proses giling) terbukti sangat mempengaruhi keberhasilan pencapaian target laba perusahaan. Oleh karena itu, analisis ini sah dikategorikan sebagai salah satu bentuk pengendalian manajemen produksi yang vital.
+    </div>
+
+    <div class="jembatan">
+      <strong>🔗 Jembatan Menuju Modul 9:</strong>
+      Seluruh siklus bisnis komersial PT KSB dari hulu ke hilir sudah kita kuasai penuh. Tapi ingat, di dunia nyata tidak semua organisasi mencari keuntungan uang. Bagaimana jika sistem pengendalian ini diterapkan pada lembaga yang misinya adalah murni sosial kemanusiaan? Kita tuntaskan di modul terakhir: **Organisasi Nirlaba**.
+    </div>
+
+  </div>
+</div>
+
+<div class="modul-card" id="m9">
+  <div class="modul-header">
+    <div class="modul-number">9</div>
+    <div>
+      <h2>Sistem Pengendalian Manajemen Organisasi Nirlaba</h2>
+      <span>Karakteristik · Akuntansi Nirlaba · Tim Internal & Eksternal</span>
+    </div>
+  </div>
+  <div class="modul-body">
+
+    <div class="studi-kasus">
+      <strong>🔄 Transformasi Kasus: "Yayasan Kopi Berbagi"</strong>
+      Bayangkan pemilik PT KSB mendirikan yayasan sosial keagamaan nirlaba bernama <strong>Yayasan Kopi Berbagi</strong> yang berfokus memberikan pelatihan barista gratis untuk anak putus sekolah. Organisasi ini tidak mencari profit moneter, melainkan bergerak atas motif moral sosial. Bagaimana sistem pengendaliannya?
+    </div>
+
+    <div class="section-title">Pelaporan Akuntansi Organisasi Nirlaba</div>
+    <div class="penting">
+      <strong>Pedoman Wajib: PSAK Nomor 45</strong><sup><a href="#fn9">[9]</a></sup>
+      Di Indonesia, tata cara pencatatan akuntansi dan pelaporan keuangan lembaga nirlaba wajib mematuhi aturan PSAK 45. Istilah ekuitas/modal diganti menjadi istilah <strong>Aset Neto</strong>.
+    </div>
+
+    <div class="grid-2">
+      <div class="grid-item">
+        <h4>📄 Laporan Posisi Keuangan</h4>
+        <p>Setara neraca. Menyajikan posisi aset, utang, dan klasifikasi nilai <strong>Aset Neto</strong> (terikat donor vs tidak terikat donor).</p>
+      </div>
+      <div class="grid-item">
+        <h4>📊 Laporan Aktivitas</h4>
+        <p>Setara Laba/Rugi. Menyajikan perubahan nilai aset neto dari pemasukan donasi sumbangan hibah dikurangi beban pengeluaran program.</p>
+      </div>
+      <div class="grid-item">
+        <h4>💧 Laporan Arus Kas</h4>
+        <p>Mencatat keluar masuk kas operasi, investasi, pendanaan untuk menguji tingkat likuiditas yayasan.</p>
+      </div>
+      <div class="grid-item">
+        <h4>📋 Laporan Fungsional Beban</h4>
+        <p>Merinci pengeluaran khusus untuk operational program sosial versus beban pendukung admin, krusial agar donatur percaya.</p>
+      </div>
+    </div>
+
+    <div class="section-title">Struktur Tim Internal Organisasi Nirlaba</div>
+
+    <div class="hijau-box">
+      <strong>1. Dewan Pengurus</strong>
+      Struktur tertinggi. Diisi oleh Ketua Umum, Wakil, Sekretaris, Bendahara, dan Anggota. Mengemban fungsi penentuan visi misi strategis, perumusan kebijakan operasional, dan pengawasan manajemen eksekutif.
+    </div>
+
+    <div class="hijau-box">
+      <strong>2. Dewan Penasihat</strong>
+      Berfungsi memberikan pertimbangan atau rekomendasi strategis keahlian. Sifatnya murni <em>konsultatif</em> tanpa wewenang hukum eksekutif formal.
+      <br><br>
+      <strong>⚠️ Bedanya dengan Dewan Komisaris PT:</strong> Dewan komisaris perseroan terbatas memiliki wewenang hukum mengikat secara legal formal untuk memecat direksi, sedangkan dewan penasihat nirlaba hanya pemberi saran sumbang pikir yang tidak mengikat secara hukum.
+    </div>
+
+    <div class="hijau-box">
+      <strong>3. Manajemen Eksekutif</strong>
+      Tim yang digaji profesional untuk mengurusi operasional harian yayasan, dipimpin oleh seorang Direktur Eksekutif.
+    </div>
+
+    <div class="hijau-box">
+      <strong>4. Tim Program</strong>
+      Ujung tombak yang merancang dan melaksanakan pelatihan barista gratis langsung di lapangan.
+    </div>
+
+    <div class="hijau-box">
+      <strong>5. Tim Keuangan & Admin</strong>
+      Menjaga transparansi pencatatan kas keluar masuk dan akuntabilitas kepatuhan pajak donor.
+    </div>
+
+    <div class="hijau-box">
+      <strong>6. Tim Penggalangan Dana (*Fundraising*)</strong>
+      Kunci keberlanjutan hidup jangka panjang (*Going Concern*) organisasi melalui pencarian dana hibah lembaga filantropi eksternal.
+    </div>
+
+  </div>
+</div>
+
+<div class="modul-card" id="referensi" style="border: 2px solid var(--biru);">
+  <div class="modul-header" style="background: linear-gradient(135deg, var(--biru-gelap), #1d3557);">
+    <div class="modul-number">📑</div>
+    <div>
+      <h2>Catatan Kaki & Referensi Sumber Ilmiah</h2>
+      <span>Kumpulan pustaka dan rujukan formal penguji validitas materi rangkuman</span>
+    </div>
+  </div>
+  <div class="modul-body" style="background: var(--abu); font-size: 13px; color: var(--teks-ringan);">
+    <ol style="padding-left: 20px; display: flex; flex-direction: column; gap: 8px;">
+      <li id="fn1"><strong>Romney, M. B., & Steinbart, P. J. (2015).</strong> <em>Accounting Information Systems (13th Edition)</em>. Pearson Education.</li>
+      <li id="fn2"><strong>Anthony, R. N., & Govindarajan, V. (2007).</strong> <em>Management Control Systems (12th Edition)</em>. McGraw-Hill.</li>
+      <li id="fn3"><strong>Merchant, K. A., & Van der Stede, W. A. (2017).</strong> <em>Management Control Systems: Performance Measurement, Evaluation and Incentives (4th Edition)</em>. Financial Times Prentice Hall.</li>
+      <li id="fn4"><strong>Koontz, H., Weihrich, H., & Cannice, M. P. (2010).</strong> <em>Essentials of Management: An International Innovation Perspective</em>. Tata McGraw-Hill.</li>
+      <li id="fn5"><strong>Spitzer, D. R. (2007).</strong> <em>Transforming Performance Measurement: Rethinking the Way We Measure and Drive Organizational Success</em>. AMACOM.</li>
+      <li id="fn6"><strong>Jackson, S. E., Schuler, R. S., & Werner, S. (2017).</strong> <em>Managing Human Resources (12th Edition)</em>. Cengage Learning.</li>
+      <li id="fn7"><strong>Williams, C. (2010).</strong> <em>Principles of Management (5th Edition)</em>. South-Western Cengage Learning.</li>
+      <li id="fn8"><strong>Lauterborn, B., Schultz, D. E., & Tannenbaum, S. I. (1994).</strong> <em>Integrated Marketing Communications</em>. NTC Business Books.</li>
+      <li id="fn9"><strong>Ikatan Akuntan Indonesia (IAI).</strong> <em>Pernyataan Standar Akuntansi Keuangan Nomor 45 (PSAK 45): Pelaporan Keuangan Organisasi Nirlaba</em>. Jakarta: IAI.</li>
+    </ol>
+    <div class="penting" style="margin-top: 14px; background: white;">
+      <strong>📚 Sumber Pustaka Utama Kurikulum:</strong><br>
+      Mulyani, Sri. (2022). <em>Buku Materi Pokok (BMP) EKSI4416 — Sistem Pengendalian Manajemen (Edisi 4)</em>. Tangerang Selatan: Penerbit Universitas Terbuka. Seluruh materi ini telah diselaraskan penuh dengan kompetensi kurikulum yang diujikan.
+    </div>
+  </div>
+</div>
+
+</div><div class="footer">
+  <p>📖 Rangkuman Bersih & Komprehensif V3 — Sistem Pengendalian Manajemen Universitas Terbuka</p>
+  <p style="margin-top:4px; opacity:0.7;">Teks mengalir bebas hambatan dengan sistem tautan balik catatan kaki dinamis</p>
+</div>
+
+</body>
+</html>
